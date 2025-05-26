@@ -1,0 +1,6 @@
+config {
+  type: "declaration",
+  schema: "ga4_obfuscated_sample_ecommerce",  
+  name: "events_*",
+  database: "bigquery-public-data"
+}

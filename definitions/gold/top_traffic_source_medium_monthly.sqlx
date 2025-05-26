@@ -1,0 +1,33 @@
+-- File: definitions/gold/top_traffic_source_medium.sqlx
+config {
+  type: "table",
+  schema: "gold",
+  name: "top_traffic_source_medium",
+  description: "Monthly aggregated report of top traffic sources by value and volume",
+  dependencies: ["purchase_traffic_source_medium"]
+}
+
+WITH base_data AS (
+  SELECT
+    DATE_TRUNC(event_date, MONTH) AS month,
+    traffic_source_medium,
+    event_value_in_usd,
+    user_pseudo_id,
+    ga_session_id
+  FROM ${ref("purchase_traffic_source_medium")}
+)
+
+SELECT
+  month,
+  traffic_source_medium,
+  
+  -- Key Business Metrics
+  SUM(event_value_in_usd) AS total_purchased_value_usd,
+  COUNT(DISTINCT CONCAT(user_pseudo_id, CAST(ga_session_id AS STRING))) AS unique_purchases,
+  COUNT(*) AS total_purchased_items,
+  ROUND(SUM(event_value_in_usd) / COUNT(DISTINCT CONCAT(user_pseudo_id, CAST(ga_session_id AS STRING))), 2) AS avg_value_per_purchase,
+  ROUND(COUNT(*) / COUNT(DISTINCT CONCAT(user_pseudo_id, CAST(ga_session_id AS STRING))), 1) AS avg_items_per_purchase
+  
+FROM base_data
+GROUP BY month, traffic_source_medium
+ORDER BY month DESC, total_purchased_value_usd DESC

@@ -1,0 +1,7 @@
+config {
+  type: "table",
+  schema: "bronze",  
+  name: "ga4_events"
+}
+
+SELECT * FROM ${ref("events_*")}

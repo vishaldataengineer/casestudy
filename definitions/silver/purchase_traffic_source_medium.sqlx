@@ -1,0 +1,20 @@
+config {
+  type: "table",
+  schema: "silver",
+  name: "purchase_traffic_source_medium",
+  description: "Cleaned purchase data with traffic source info",
+  dependencies: ["ga4_events"]
+}
+
+SELECT
+  PARSE_DATE('%Y%m%d', event_date) AS event_date,
+  traffic_source.medium AS traffic_source_medium,
+  user_pseudo_id,
+  (SELECT value.int_value FROM UNNEST(event_params) WHERE key = 'ga_session_id') AS ga_session_id,
+  COALESCE(event_value_in_usd, 0) AS event_value_in_usd
+FROM 
+  ${ref("ga4_events")}
+WHERE 
+  event_name = 'purchase'
+  AND traffic_source.medium IS NOT NULL
+  AND traffic_source.medium NOT LIKE '%(data deleted)%'
