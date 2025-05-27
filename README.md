@@ -4,13 +4,8 @@
 - **Purpose**: Transform raw GA4 eCommerce data into business-ready metrics
 - **Owner**: Analytics Team (@your-email)
 - **Key Stakeholders**: Marketing, Sales, Product Management teams.
-- **Data Source**: bigquery-public-data.ga4_obfuscated_sample_ecommerce.events_* (a public, sharded BigQuery dataset representing raw GA4 event streams).
-- **Architecture**: Implemented using a Medallion Architecture pattern:
-    - **Bronze Layer**: Raw, immutable data declaration.
-    - **Silver Layer**: Cleaned, filtered, and denormalized data.
-    - **Gold Layer**: Aggregated, business-ready metrics for reporting.
-- **Cost Optimization Strategy**: This is a critical point for any BigQuery project and demonstrates best practices. It highlights your awareness of cost-efficient design.
-- **How to Run**: Added brief descriptions for each command, making it more user-friendly.
+- **Data Source**: `bigquery-public-data.ga4_obfuscated_sample_ecommerce.events_*` (3 months of sample data)
+- **Architecture**: Medallion (Bronze → Silver → Gold)
 
 
 ## **Data Flow**
