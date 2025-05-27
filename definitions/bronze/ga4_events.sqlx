@@ -1,7 +1,10 @@
 config {
   type: "table",
   schema: "bronze",  
-  name: "ga4_events"
+  name: "ga4_events",
+  description: "Materializes raw GA4 event data from public dataset"
 }
 
 SELECT * FROM ${ref("events_*")}
+
+  ## Overview - Creates a physical table containing raw, unprocessed GA4 eCommerce events from Google's public dataset.

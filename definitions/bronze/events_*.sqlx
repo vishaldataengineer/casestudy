@@ -4,3 +4,24 @@ config {
   name: "events_*",
   database: "bigquery-public-data"
 }
+
+# GA4 Raw Event Declaration
+  
+  ## Source
+  Public BigQuery dataset containing anonymized GA4 eCommerce events
+  - Location: bigquery-public-data.ga4_obfuscated_sample_ecommerce
+  - Table pattern: events_* (date-sharded tables)
+  - Date range: 2020-11-01 to 2021-01-31
+
+  ## Usage Notes
+  This is a reference declaration only - no data is materialized.
+  
+  Example query:
+  ```sql
+  SELECT 
+    event_date,
+    event_name,
+    COUNT(*) as event_count
+  FROM ${self()}
+  WHERE _TABLE_SUFFIX BETWEEN '20201101' AND '20201130'
+  GROUP BY 1, 2

@@ -18,3 +18,8 @@ WHERE
   event_name = 'purchase'
   AND traffic_source.medium IS NOT NULL
   AND traffic_source.medium NOT LIKE '%(data deleted)%'
+
+   ## Transformation Logic  1. Filters only completed purchases 2. Cleans and standardizes traffic source data 3. Extracts session identifiers  4. Handles NULL USD values (defaults to 0)
+
+
+## Business Purpose 1. Tracks which marketing channels drive conversions 2. Provides clean data for revenue attribution
